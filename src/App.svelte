@@ -1,9 +1,9 @@
 <script lang="ts">
-  import Greet from './lib/Greet.svelte'
+  import Simulators from './lib/Simulators.svelte'
 </script>
 
 <main class="container">
-  <h1>Welcome to Tauri!</h1>
+  <h1>Deeplinkr</h1>
 
   <div class="row">
     <a href="https://vitejs.dev" target="_blank">
@@ -22,7 +22,7 @@
   </p>
 
   <div class="row">
-    <Greet />
+    <Simulators />
   </div>
 
 
