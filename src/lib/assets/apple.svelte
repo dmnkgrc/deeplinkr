@@ -1,6 +1,6 @@
 <script>
-  export let width = 24;
-  export let height = 24;
+  export let width = 16;
+  export let height = 16;
 </script>
 
 <svg
@@ -14,6 +14,7 @@
   xml:space="preserve"
   {width}
   {height}
+  fill="currentColor"
 >
   <g id="_Group_2">
     <g id="_Group_3">

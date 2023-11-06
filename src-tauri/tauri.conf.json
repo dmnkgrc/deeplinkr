@@ -40,7 +40,7 @@
         "height": 600,
         "resizable": false,
         "title": "menubar",
-        "width": 600,
+        "width": 400,
         "visible": false,
         "hiddenTitle": true,
         "decorations": false,

@@ -1,39 +1,16 @@
 <script lang="ts">
-  import Simulators from './lib/Simulators.svelte'
+  import Simulators from './lib/Simulators.svelte';
 </script>
 
-<main class="container">
-  <h1>Deeplinkr</h1>
-
-  <div class="row">
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo vite" alt="Vite Logo" />
-    </a>
-    <a href="https://tauri.app" target="_blank">
-      <img src="/tauri.svg" class="logo tauri" alt="Tauri Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank">
-      <img src="/svelte.svg" class="logo svelte" alt="Svelte Logo" />
-    </a>
+<div class="flex w-full flex-row items-center justify-center">
+  <div
+    class="border-b-base-100 h-0 w-0 border-b-8 border-l-8 border-r-8 border-solid border-l-transparent border-r-transparent"
+  ></div>
+</div>
+<main class="bg-base-100 px-6 py-3">
+  <div class="flex flex-row items-center space-x-2 pb-8">
+    <img src="/icon-large.png" class="h-5" alt="Deeplinkr logo" />
+    <h1 class="text-2xl font-bold">Deeplinkr</h1>
   </div>
-
-  <p>
-    Click on the Tauri, Vite, and Svelte logos to learn more.
-  </p>
-
-  <div class="row">
-    <Simulators />
-  </div>
-
-
+  <Simulators />
 </main>
-
-<style>
-  .logo.vite:hover {
-    filter: drop-shadow(0 0 2em #747bff);
-  }
-
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00);
-  }
-</style>
