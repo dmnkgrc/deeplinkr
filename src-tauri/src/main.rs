@@ -34,6 +34,21 @@ fn get_simulators() -> Result<Simulators, String> {
         serde_json::from_str(&stdout).expect("Failed to parse simulators json");
     return Ok(simulators);
 }
+
+#[tauri::command]
+fn get_emulators() -> Result<Vec<String>, String> {
+    let output = Command::new("emulator")
+        .args(["-list-avds"])
+        // execute the command, wait for it to complete, then capture the output
+        .output()
+        .unwrap();
+    let stdout = String::from_utf8(output.stdout).unwrap();
+    let emulators: Vec<String> = stdout.lines().map(|s| s.to_string()).collect();
+    println!("{:?}", emulators);
+
+    return Ok(emulators);
+}
+
 #[derive(serde::Serialize, serde::Deserialize, Debug)]
 struct SimulatorDeepLink {
     udid: String,
@@ -96,6 +111,7 @@ fn main() {
         .system_tray(SystemTray::new().with_menu(system_tray_menu))
         .invoke_handler(tauri::generate_handler![
             get_simulators,
+            get_emulators,
             open_deeplink_in_simulator
         ])
         .on_system_tray_event(|app, event| {

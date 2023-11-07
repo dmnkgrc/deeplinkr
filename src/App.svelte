@@ -1,15 +1,23 @@
 <script lang="ts">
   import { invoke } from '@tauri-apps/api/tauri';
+  import Emulators from './lib/Emulators.svelte';
   import Simulators from './lib/Simulators.svelte';
 
   let selectedSimulator: string | undefined;
+  let selectedEmulator: string | undefined;
   let deeplink: string | undefined;
-  function isDisabled(
-    selectedSimulator?: string,
-    deeplink?: string,
-    loading?: boolean,
-  ) {
-    return !selectedSimulator || !deeplink || loading;
+  function isDisabled({
+    selectedSimulator,
+    selectedEmulator,
+    deeplink,
+    loading,
+  }: {
+    selectedSimulator?: string;
+    selectedEmulator?: string;
+    deeplink?: string;
+    loading?: boolean;
+  }) {
+    return (!selectedSimulator && !selectedEmulator) || !deeplink || loading;
   }
   let loading = false;
   async function openDeepLink() {
@@ -45,8 +53,14 @@
     />
   </div>
   <Simulators bind:selectedSimulator />
+  <Emulators bind:selectedEmulator />
   <button
-    disabled={isDisabled(selectedSimulator, deeplink, loading)}
+    disabled={isDisabled({
+      selectedSimulator,
+      selectedEmulator,
+      deeplink,
+      loading,
+    })}
     on:click={openDeepLink}
     class="btn btn-primary"
   >
