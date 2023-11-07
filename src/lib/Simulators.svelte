@@ -30,17 +30,7 @@
     });
 
   let simulatorsPromise = getSimulators();
-  let selectedSimulator: string | undefined;
-  let deeplink: string | undefined;
-  let loading = false;
-
-  function isDisabled(
-    selectedSimulator?: string,
-    deeplink?: string,
-    loading?: boolean,
-  ) {
-    return !selectedSimulator || !deeplink || loading;
-  }
+  export let selectedSimulator: string | undefined;
 
   async function getSimulators() {
     const simulators = await simulatorsSchema.parseAsync(
@@ -48,30 +38,9 @@
     );
     return simulators;
   }
-
-  async function openDeepLink() {
-    loading = true;
-    const [udid, state] = selectedSimulator?.split(',') || [];
-    await invoke('open_deeplink_in_simulator', {
-      link: {
-        deep_link: deeplink,
-        udid,
-        state,
-      },
-    }).catch(console.error);
-    loading = false;
-  }
 </script>
 
 <div class="flex w-full flex-col">
-  <div class="space-y-2 pb-4">
-    <input
-      type="text"
-      bind:value={deeplink}
-      placeholder="Paste your deeplink here"
-      class="input input-bordered w-full"
-    />
-  </div>
   <div class="text-primary-content flex flex-row items-center space-x-2">
     <AppleLogo width={18} height={18} />
     <p class="pt-0.5 text-lg">Simulators</p>
@@ -94,14 +63,4 @@
   {:catch someError}
     System error: {someError.message}.
   {/await}
-  <button
-    disabled={isDisabled(selectedSimulator, deeplink, loading)}
-    on:click={openDeepLink}
-    class="btn btn-primary"
-  >
-    {#if loading}
-      <span class="loading loading-spinner"></span>
-    {/if}
-    Open deeplink!
-  </button>
 </div>

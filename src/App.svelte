@@ -1,5 +1,29 @@
 <script lang="ts">
+  import { invoke } from '@tauri-apps/api/tauri';
   import Simulators from './lib/Simulators.svelte';
+
+  let selectedSimulator: string | undefined;
+  let deeplink: string | undefined;
+  function isDisabled(
+    selectedSimulator?: string,
+    deeplink?: string,
+    loading?: boolean,
+  ) {
+    return !selectedSimulator || !deeplink || loading;
+  }
+  let loading = false;
+  async function openDeepLink() {
+    loading = true;
+    const [udid, state] = selectedSimulator?.split(',') || [];
+    await invoke('open_deeplink_in_simulator', {
+      link: {
+        deep_link: deeplink,
+        udid,
+        state,
+      },
+    }).catch(console.error);
+    loading = false;
+  }
 </script>
 
 <div class="flex w-full flex-row items-center justify-center">
@@ -12,5 +36,23 @@
     <img src="/icon-large.png" class="h-5" alt="Deeplinkr logo" />
     <h1 class="text-2xl font-bold">Deeplinkr</h1>
   </div>
-  <Simulators />
+  <div class="space-y-2 pb-4">
+    <input
+      type="text"
+      bind:value={deeplink}
+      placeholder="Paste your deeplink here"
+      class="input input-bordered w-full"
+    />
+  </div>
+  <Simulators bind:selectedSimulator />
+  <button
+    disabled={isDisabled(selectedSimulator, deeplink, loading)}
+    on:click={openDeepLink}
+    class="btn btn-primary"
+  >
+    {#if loading}
+      <span class="loading loading-spinner"></span>
+    {/if}
+    Open deeplink!
+  </button>
 </main>
